@@ -13,7 +13,6 @@ SmallEducator/.vs/
 SmallEducator/ExportedObj/
 SmallEducator/.consulo/
 SmallEducator/*.csproj
-SmallEducator/*.unityproj
 SmallEducator/*.sln
 SmallEducator/*.suo
 SmallEducator/*.tmp
@@ -28,7 +27,6 @@ SmallEducator/*.opendb
 # Unity3D generated meta files
 SmallEducator/*.pidb.meta
 SmallEducator/*.pdb.meta
-*.meta
 
 # Unity3D Generated File On Crash Reports
 SmallEducator/sysinfo.txt
