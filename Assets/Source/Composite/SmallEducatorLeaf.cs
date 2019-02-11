@@ -1,56 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Source.LeafBehaviour;
 
-public class SmallEducatorLeaf : Component
+namespace Source.Composite
 {
-    private SmallEducator program;
-    private ILeafBehaviour behaviour;
-    private bool started;
-
-    public SmallEducatorLeaf(int id, string name, float minute, float second, SmallEducator program, ILeafBehaviour behaviour) :
-        base(id, name, (minute * 60) + second)
+    public class SmallEducatorLeaf : Component
     {
-        this.behaviour = behaviour;
-        this.program = program;
-        started = false;
-    }
+        private readonly ILeafBehaviour behaviour;
+        private readonly SmallEducator program;
+        private bool started;
 
-    public override void start()
-    {
-        behaviour.start();
-        started = true;
-    }
-
-    public override void doAction()
-    {
-        if (started && !behaviour.update())
+        public SmallEducatorLeaf(int id, string name, float minute, float second, SmallEducator program,
+            ILeafBehaviour behaviour) :
+            base(id, name, minute * 60 + second)
         {
-            behaviour.cleanUp();
-            program.removeComponent(this);
+            this.behaviour = behaviour;
+            this.program = program;
+            started = false;
         }
-    }
 
-    public override void addComponent(Component component)
-    {
-        throw new System.NotImplementedException();
-    }
+        public override void Start()
+        {
+            behaviour.Start();
+            started = true;
+        }
 
-    public override Component getComponent(int index)
-    {
-        throw new System.NotImplementedException();
-    }
+        public override void DoAction()
+        {
+            if (started && !behaviour.Update())
+            {
+                behaviour.CleanUp();
+                program.RemoveComponent(this);
+            }
+        }
 
-    public override void removeComponent(Component component)
-    {
-        throw new System.NotImplementedException();
-    }
+        public override void AddComponent(Component component)
+        {
+            throw new NotImplementedException();
+        }
 
-    public override void swapComponent(int indexOldPosition, int indexNewPosition)
-    {
-        throw new System.NotImplementedException();
-    }
+        public override Component GetComponent(int index)
+        {
+            throw new NotImplementedException();
+        }
 
-    public override IEnumerator<Component> getIterator()
-    {
-        throw new System.NotImplementedException();
+        public override void RemoveComponent(Component component)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void SwapComponent(int indexOldPosition, int indexNewPosition)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IEnumerator<Component> GetIterator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

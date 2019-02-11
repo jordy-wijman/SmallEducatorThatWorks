@@ -1,20 +1,20 @@
 ﻿using LeafManupulator.Effect;
 
-namespace LeafManupulator
+namespace Source.LeafManipulator
 {
     public class FadeOut : FadeIn
     {
-        public override void init()
+        public override void Init()
         {
-            base.init();
+            base.Init();
             color.a = 1;
-            fader.FadeState = AlphaFade.FADE_OUT;
+            fader.FadeState = AlphaFade.FadeOut;
             doneValue = 0.0f;
         }
 
-        public override void reset()
+        public override void Reset()
         {
-            base.reset();
+            base.Reset();
             color.a = 1;
         }
     }

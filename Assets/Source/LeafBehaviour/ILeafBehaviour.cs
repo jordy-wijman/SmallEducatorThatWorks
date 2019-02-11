@@ -1,6 +1,9 @@
-﻿public interface ILeafBehaviour
+﻿namespace Source.LeafBehaviour
 {
-    void start();
-    bool update();
-    void cleanUp();
+    public interface ILeafBehaviour
+    {
+        void Start();
+        bool Update();
+        void CleanUp();
+    }
 }

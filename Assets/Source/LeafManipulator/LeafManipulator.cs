@@ -2,17 +2,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LeafManupulator
+namespace Source.LeafManipulator
 {
     public abstract class LeafManipulator
     {
         protected Color color;
 
-        public abstract void init();
-        public abstract bool update();
-        public abstract void reset();
+        public abstract void Init();
+        public abstract bool Update();
+        public abstract void Reset();
 
-        public virtual void manipulate(Image image)
+        public virtual void Manipulate(Image image)
         {
             color.r = image.color.r;
             color.g = image.color.g;
@@ -20,7 +20,7 @@ namespace LeafManupulator
             image.color = color;
         }
 
-        public virtual void manipulate(TextMeshProUGUI textField)
+        public virtual void Manipulate(TextMeshProUGUI textField)
         {
             color.r = textField.color.r;
             color.g = textField.color.g;

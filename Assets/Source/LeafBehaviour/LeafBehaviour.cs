@@ -1,19 +1,21 @@
-﻿using LeafManupulator;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-public abstract class LeafBehaviour : ILeafBehaviour
+namespace Source.LeafBehaviour
 {
-    protected static int FADE_IN = 0;
-    protected static int FADE_OUT = 1;
-    protected static int FLY_IN = 2;
-    protected static int FLY_OUT = 3;
+    public abstract class LeafBehaviour : ILeafBehaviour
+    {
+        protected const int FadeIn = 0;
+        protected const int FadeOut = 1;
+        protected const int FlyIn = 2;
+        protected const int FlyOut = 3;
 
-    protected List<LeafManipulator> leafManipulators;
-    protected bool manipulatorsDone = false;
+        protected List<LeafManipulator.LeafManipulator> leafManipulators;
+        protected bool manipulatorsDone = false;
 
-    public abstract void cleanUp();
+        public abstract void CleanUp();
 
-    public abstract void start();
+        public abstract void Start();
 
-    public abstract bool update();
+        public abstract bool Update();
+    }
 }

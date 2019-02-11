@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class ExtraTextSettings
+namespace Source.GUI
 {
-    public bool HasBackGround { get; set; }
-    public Color BackGroundColor { get; set; }
-    public FontStyle fontStyle { get; set; }
-    public int fontSize { get; set; }
+    public class ExtraTextSettings
+    {
+        public bool HasBackGround { get; set; }
+        public Color BackGroundColor { get; set; }
+        public FontStyle FontStyle { get; set; }
+        public int FontSize { get; set; }
+    }
 }

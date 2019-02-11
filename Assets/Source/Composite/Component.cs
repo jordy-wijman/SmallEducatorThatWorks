@@ -1,39 +1,32 @@
 ﻿using System.Collections.Generic;
 
-/// <summary>
-/// This class does something.
-/// </summary>
-public abstract class Component
+namespace Source.Composite
 {
-    private int id;
-    public int ID
+    /// <summary>
+    ///     This class does something.
+    /// </summary>
+    public abstract class Component
     {
-        get { return id; }
-        set { id = value; }
+        protected Component(int id, string name, float timeStap)
+        {
+            Id = id;
+            Name = name;
+            TimeStamp = timeStap;
+        }
+
+        public int Id { get; set; }
+
+        public float TimeStamp { get; set; }
+
+        public string Name { get; set; }
+
+        public abstract void AddComponent(Component component);
+        public abstract void RemoveComponent(Component component);
+        public abstract Component GetComponent(int index);
+        public abstract void SwapComponent(int indexOldPosition, int indexNewPosition);
+        public abstract IEnumerator<Component> GetIterator();
+
+        public abstract void Start();
+        public abstract void DoAction();
     }
-
-    private float timeStamp;
-    public float TimeStamp
-    {
-        get { return timeStamp; }
-        set { timeStamp = value; }
-    }
-
-    public string Name { get; set; }
-
-    protected Component(int id, string name, float timeStap)
-    {
-        ID = id;
-        Name = name;
-        TimeStamp = timeStap;
-    }
-
-    public abstract void addComponent(Component component);
-    public abstract void removeComponent(Component component);
-    public abstract Component getComponent(int index);
-    public abstract void swapComponent(int indexOldPosition, int indexNewPosition);
-    public abstract IEnumerator<Component> getIterator();
-
-    public abstract void start();
-    public abstract void doAction();
 }

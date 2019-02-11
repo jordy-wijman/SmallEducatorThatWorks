@@ -1,47 +1,51 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-public class SmallEducatorComposite : Component
+namespace Source.Composite
 {
-    private List<Component> componentList = new List<Component>();
-
-    public SmallEducatorComposite(int id, string name, float timeStap) : base(id, name, timeStap)
+    public class SmallEducatorComposite : Component
     {
-    }
+        private readonly List<Component> componentList = new List<Component>();
 
-    public override void addComponent(Component component)
-    {
-        componentList.Add(component);
-    }
+        public SmallEducatorComposite(int id, string name, float timeStap) : base(id, name, timeStap)
+        {
+        }
 
-    public override Component getComponent(int index)
-    {
-        return componentList[index];
-    }
+        public override void AddComponent(Component component)
+        {
+            componentList.Add(component);
+        }
 
-    public override void removeComponent(Component component)
-    {
-        componentList.Remove(component);
-    }
+        public override Component GetComponent(int index)
+        {
+            return componentList[index];
+        }
 
-    public override void swapComponent(int indexOldPosition, int indexNewPosition)
-    {
-        Component temp = componentList[indexNewPosition];
-        componentList[indexNewPosition] = componentList[indexOldPosition];
-        componentList[indexNewPosition] = temp;
-    }
+        public override void RemoveComponent(Component component)
+        {
+            componentList.Remove(component);
+        }
 
-    public override IEnumerator<Component> getIterator()
-    {
-        return new SmallEducatorCompositeIterator(componentList);
-    }
+        public override void SwapComponent(int indexOldPosition, int indexNewPosition)
+        {
+            var temp = componentList[indexNewPosition];
+            componentList[indexNewPosition] = componentList[indexOldPosition];
+            componentList[indexNewPosition] = temp;
+        }
 
-    public override void doAction()
-    {
-        throw new System.NotImplementedException();
-    }
+        public override IEnumerator<Component> GetIterator()
+        {
+            return new SmallEducatorCompositeIterator(componentList);
+        }
 
-    public override void start()
-    {
-        throw new System.NotImplementedException();
+        public override void DoAction()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Start()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

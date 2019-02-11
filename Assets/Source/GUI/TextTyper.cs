@@ -1,176 +1,143 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
-namespace GameLib.System.GUI
+namespace Source.GUI
 {
     public class TextTyper : MonoBehaviour
     {
         public enum TextTyperState
         {
-            introductionText,
-            fadeoutIntroductionText,
-            fadeoutDoneIntroductionText,
-            endSceneText
-        };
-
-        private List<TextInit> textSetting;
-
-        public List<TextInit> TextSetting
-        {
-            get { return textSetting; }
-            set { textSetting = value; }
+            IntroductionText,
+            FadeoutIntroductionText,
+            FadeoutDoneIntroductionText,
+            EndSceneText
         }
 
-        private int textSettingIndex;
+        public List<TextInit> TextSetting { get; set; }
 
-        public int TextSettingIndex
-        {
-            get { return textSettingIndex; }
-            set { textSettingIndex = value; }
-        }
+        public int TextSettingIndex { get; set; }
 
-        private TextInit currectTextSetting;
+        public TextInit CurrentTextSetting { get; set; }
 
-        public TextInit CurrectTextSetting
-        {
-            get { return currectTextSetting; }
-            set { currectTextSetting = value; }
-        }
+        public TextMeshProUGUI TextField { get; set; }
 
-        private TextMeshProUGUI textField;
-
-        public TextMeshProUGUI TextField
-        {
-            get { return textField; }
-            set { textField = value; }
-        }
-
-        private TextTyperState state;
-
-        public TextTyperState State
-        {
-            get { return state; }
-            set { state = value; }
-        }
+        public TextTyperState State { get; set; }
 
         // Use this for initialization
         private void Start()
         {
-            init();
+            Init();
         }
 
-        private void init()
+        private void Init()
         {
-            resetTextField();
+            ResetTextField();
             ///////showNextText();
         }
 
-        private void resetTextField()
+        private void ResetTextField()
         {
-            Color color = textField.color;
+            var color = TextField.color;
             color.a = 1.0f;
-            textField.color = color;
-            textField.text = "";
+            TextField.color = color;
+            TextField.text = "";
         }
 
-        public void showGameOver()
+        public void ShowGameOver()
         {
-            resetTextField();
-            textSettingIndex = textSetting.Count - 1;
-            state = TextTyperState.introductionText;
-            currectTextSetting = textSetting[textSettingIndex];
-            currectTextSetting.CurrectText = 0;
-            textField.text = "";
-            textSettingIndex++;
-            StartCoroutine(TypeText(currectTextSetting.Text[currectTextSetting.CurrectText]));
+            ResetTextField();
+            TextSettingIndex = TextSetting.Count - 1;
+            State = TextTyperState.IntroductionText;
+            CurrentTextSetting = TextSetting[TextSettingIndex];
+            CurrentTextSetting.CurrectText = 0;
+            TextField.text = "";
+            TextSettingIndex++;
+            StartCoroutine(TypeText(CurrentTextSetting.Text[CurrentTextSetting.CurrectText]));
         }
 
-        public void showNextText()
+        public void ShowNextText()
         {
-            resetTextField();
+            ResetTextField();
 
-            state = TextTyperState.introductionText;
-            currectTextSetting = textSetting[textSettingIndex];
-            currectTextSetting.CurrectText = 0;
-            textField.text = "";
-            textSettingIndex++;
-            StartCoroutine(TypeText(currectTextSetting.Text[currectTextSetting.CurrectText]));
+            State = TextTyperState.IntroductionText;
+            CurrentTextSetting = TextSetting[TextSettingIndex];
+            CurrentTextSetting.CurrectText = 0;
+            TextField.text = "";
+            TextSettingIndex++;
+            StartCoroutine(TypeText(CurrentTextSetting.Text[CurrentTextSetting.CurrectText]));
         }
 
-        public void fadeOutText()
+        public void FadeOutText()
         {
-            state = TextTyperState.fadeoutIntroductionText;
+            State = TextTyperState.FadeoutIntroductionText;
 
             StartCoroutine(FadeText());
         }
 
-        IEnumerator FadeText()
+        private IEnumerator FadeText()
         {
             yield return new WaitForSeconds(1.0f);
 
-            Color color = textField.color;
-                
+            var color = TextField.color;
+
             for (color.a = 1.0f; color.a > 0.0f; color.a -= 0.04f)
             {
-                textField.color = color;
+                TextField.color = color;
                 yield return 0;
-                yield return new WaitForSeconds(currectTextSetting.LetterPause / 50.0f);
+                yield return new WaitForSeconds(CurrentTextSetting.LetterPause / 50.0f);
             }
 
-            state = TextTyperState.fadeoutDoneIntroductionText;
+            State = TextTyperState.FadeoutDoneIntroductionText;
         }
 
-        IEnumerator TypeText(string message)
+        private IEnumerator TypeText(string message)
         {
-            if (state == TextTyperState.introductionText)
+            if (State == TextTyperState.IntroductionText)
             {
-                foreach (char letter in message.ToCharArray())
+                foreach (var letter in message)
                 {
-                    textField.text += letter;
+                    TextField.text += letter;
 
-                    if (state != TextTyperState.introductionText)
-                    {
-                        break;
-                    }
+                    if (State != TextTyperState.IntroductionText) break;
                     yield return 0;
-                    yield return new WaitForSeconds(currectTextSetting.LetterPause);
+                    yield return new WaitForSeconds(CurrentTextSetting.LetterPause);
                 }
 
-                if (currectTextSetting.CurrectText < 2 && currectTextSetting.CurrectText < (currectTextSetting.Text.Count -1))
+                if (CurrentTextSetting.CurrectText < 2 &&
+                    CurrentTextSetting.CurrectText < CurrentTextSetting.Text.Count - 1)
                 {
-                    textField.text += "\n";
-                    currectTextSetting.CurrectText++;
-                    StartCoroutine(TypeText(currectTextSetting.Text[currectTextSetting.CurrectText]));
+                    TextField.text += "\n";
+                    CurrentTextSetting.CurrectText++;
+                    StartCoroutine(TypeText(CurrentTextSetting.Text[CurrentTextSetting.CurrectText]));
                 }
                 else
                 {
                     yield return new WaitForSeconds(10.0f);
-                    fadeOutText();
+                    FadeOutText();
                 }
             }
         }
 
-        public void showEndText(int textId)
+        public void ShowEndText(int textId)
         {
-            textField.text = "";
-            Color color = textField.color;
+            TextField.text = "";
+            var color = TextField.color;
             color.a = 1.0f;
-            textField.color = color;
-            currectTextSetting.CurrectText = textId;
-            StartCoroutine(TypeTextTwo(currectTextSetting.EndOfSceneText[currectTextSetting.CurrectText]));
+            TextField.color = color;
+            CurrentTextSetting.CurrectText = textId;
+            StartCoroutine(TypeTextTwo(CurrentTextSetting.EndOfSceneText[CurrentTextSetting.CurrectText]));
         }
 
-        IEnumerator TypeTextTwo(string message)
+        private IEnumerator TypeTextTwo(string message)
         {
-            foreach (char letter in message.ToCharArray())
+            foreach (var letter in message)
             {
-                textField.text += letter;
+                TextField.text += letter;
 
                 yield return 0;
-                yield return new WaitForSeconds(currectTextSetting.LetterPause);
+                yield return new WaitForSeconds(CurrentTextSetting.LetterPause);
             }
         }
     }

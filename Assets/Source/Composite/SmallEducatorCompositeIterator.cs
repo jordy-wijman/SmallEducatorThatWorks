@@ -1,56 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class SmallEducatorCompositeIterator : IEnumerator<Component>
+namespace Source.Composite
 {
-    private List<Component> componentList;
-    private Component currentComponent;
-    private int currentIndex = -1;
-
-    public SmallEducatorCompositeIterator(List<Component> componentList)
+    public class SmallEducatorCompositeIterator : IEnumerator<Component>
     {
-        this.componentList = componentList;
-        currentIndex = 0;
-        MoveNext();
-    }
+        private List<Component> componentList;
+        private int currentIndex;
 
-    public Component Current
-    {
-        get
+        public SmallEducatorCompositeIterator(List<Component> componentList)
         {
-            return currentComponent;
+            this.componentList = componentList;
+            currentIndex = 0;
+            MoveNext();
         }
-    }
 
-    object IEnumerator.Current
-    {
-        get
+        public Component Current { get; private set; }
+
+        object IEnumerator.Current
         {
-            return currentComponent;
+            get { return Current; }
         }
-    }
 
-    public void Dispose()
-    {
-        componentList = null;
-        currentComponent = null;
-    }
-
-    public bool MoveNext()
-    {
-        bool movedToNext = false;
-        if (currentIndex < componentList.Count)
+        public void Dispose()
         {
-            movedToNext = true;
-            currentComponent = componentList[currentIndex];
-            currentIndex++;
+            componentList = null;
+            Current = null;
         }
-        return movedToNext;
-    }
 
-    public void Reset()
-    {
-        currentIndex = 0;
-        currentComponent = componentList[currentIndex];
+        public bool MoveNext()
+        {
+            var movedToNext = false;
+            if (currentIndex < componentList.Count)
+            {
+                movedToNext = true;
+                Current = componentList[currentIndex];
+                currentIndex++;
+            }
+
+            return movedToNext;
+        }
+
+        public void Reset()
+        {
+            currentIndex = 0;
+            Current = componentList[currentIndex];
+        }
     }
 }

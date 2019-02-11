@@ -1,39 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class OnlineResourceBehaviour : ILeafBehaviour
+namespace Source.LeafBehaviour
 {
-    private string url;
-    private Button extraResourceButton;
-    private float timer;
-
-    public OnlineResourceBehaviour(string url, Button extraResourceButton, float timer)
+    public class OnlineResourceBehaviour : ILeafBehaviour
     {
-        this.url = url;
-        this.extraResourceButton = extraResourceButton;
-        this.timer = timer;
+        private readonly Button extraResourceButton;
+        private float timer;
+        private readonly string url;
+
+        public OnlineResourceBehaviour(string url, Button extraResourceButton, float timer)
+        {
+            this.url = url;
+            this.extraResourceButton = extraResourceButton;
+            this.timer = timer;
+        }
+
+        public void CleanUp()
+        {
+            extraResourceButton.transform.position = new Vector2(10000000.0f, 10000000.0f);
+        }
+
+        public void Start()
+        {
+            extraResourceButton.transform.position = new Vector2(950, 70.0f);
+        }
+
+        public bool Update()
+        {
+            timer -= Time.fixedDeltaTime;
+
+            return timer > 0.0f;
+        }
+
+        public void DoOnClick()
+        {
+            Application.OpenURL(url);
+        }
     }
-
-    public void cleanUp()
-    {
-        extraResourceButton.transform.position = new Vector2(10000000.0f, 10000000.0f);
-    }
-
-    public void start()
-    {
-        extraResourceButton.transform.position = new Vector2(950, 70.0f);
-    }
-
-    public bool update()
-    {
-        timer -= Time.fixedDeltaTime;       
-
-        return timer > 0.0f;
-    }
-
-    public void doOnClick()
-    {
-        Application.OpenURL(url);
-    }
-
 }

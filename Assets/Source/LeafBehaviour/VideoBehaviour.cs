@@ -1,56 +1,59 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 
-public class VideoBehaviour : ILeafBehaviour
+namespace Source.LeafBehaviour
 {
-    private GameObject quad;
-    private VideoPlayer videoPlayer;
-    private string videoFile;
-    private bool isOnlineVideo;
-    private Vector2 position;
-    private int width;
-    private int height;
-    private float timer;
-
-    public VideoBehaviour(VideoPlayer videoPlayer, string videoFile, bool isOnlineVideo, Vector2 position, 
-        int width, int height, GameObject quad)
+    public class VideoBehaviour : ILeafBehaviour
     {
-        this.videoPlayer = videoPlayer;
-        this.videoFile = videoFile;
-        this.isOnlineVideo = isOnlineVideo;
-        this.position = position;
-        this.height = height;
-        this.width = width;
-        this.quad = quad;
-        timer = 0.5f;
-    }
+        private readonly int height;
+        private bool isOnlineVideo;
+        private readonly Vector2 position;
+        private readonly GameObject quad;
+        private float timer;
+        private readonly string videoFile;
+        private readonly VideoPlayer videoPlayer;
+        private readonly int width;
 
-    public void start()
-    {
-        Renderer rend = quad.GetComponent<Renderer>();
-        if (rend != null)
+        public VideoBehaviour(VideoPlayer videoPlayer, string videoFile, bool isOnlineVideo, Vector2 position,
+            int width, int height, GameObject quad)
         {
-            var texture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
-            
-            rend.material.mainTexture = texture;
-            videoPlayer.targetTexture = texture;
+            this.videoPlayer = videoPlayer;
+            this.videoFile = videoFile;
+            this.isOnlineVideo = isOnlineVideo;
+            this.position = position;
+            this.height = height;
+            this.width = width;
+            this.quad = quad;
+            timer = 0.5f;
         }
-        
-        quad.transform.position = new Vector3(position.x, position.y, 0.0f);
 
-        videoPlayer.url = videoFile;
-        videoPlayer.Play();
-    }
+        public void Start()
+        {
+            var rend = quad.GetComponent<Renderer>();
+            if (rend != null)
+            {
+                var texture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
 
-    public void cleanUp()
-    {
-        quad.transform.position = new Vector3(1000.0f, 0.0f, 0.0f);
-    }
+                rend.material.mainTexture = texture;
+                videoPlayer.targetTexture = texture;
+            }
 
-    public bool update()
-    {
-        bool videoPlaying = (timer > 5.0f) ? videoPlayer.isPlaying : true;
-        timer += Time.fixedDeltaTime;
-        return videoPlaying;
+            quad.transform.position = new Vector3(position.x, position.y, 0.0f);
+
+            videoPlayer.url = videoFile;
+            videoPlayer.Play();
+        }
+
+        public void CleanUp()
+        {
+            quad.transform.position = new Vector3(1000.0f, 0.0f, 0.0f);
+        }
+
+        public bool Update()
+        {
+            var videoPlaying = !(timer > 5.0f) || videoPlayer.isPlaying;
+            timer += Time.fixedDeltaTime;
+            return videoPlaying;
+        }
     }
 }

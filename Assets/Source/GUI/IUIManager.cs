@@ -1,6 +1,6 @@
-﻿namespace GameLib.System.GUI
+﻿namespace Source.GUI
 {
-    public interface IUIManager
+    public interface IUiManager
     {
         void doScreenTransition();
     }

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 //http://answers.unity3d.com/questions/654836/unity2d-sprite-fade-in-and-out.html
 
@@ -7,49 +6,53 @@ namespace LeafManupulator.Effect
 {
     public class AlphaFade
     {
-        public static int FADE_NONE = 0;
-        public static int FADE_IN = 1;
-        public static int FADE_OUT = 2;
+        public const int FadeNone = 0;
+        public const int FadeIn = 1;
+        public const int FadeOut = 2;
 
-        private float fade;
-
-        public float Fade { get { return fade; } set { fade = value; } }
-
-        private float fadeSpeed = 0.0f;
-
-        public float FadeSpeed { get { return fadeSpeed; } set { fadeSpeed = value; } }
+        private float fadeSpeed;
 
         private float fadeTime = 0.30f;
 
-        public float FadeTime { get { return fadeTime; } set { fadeTime = value; } }
-
-        private int fadeState = 0;
-
-        public int FadeState { get { return fadeState; } set { fadeState = value; } }
-
         public AlphaFade()
         {
-            fadeState = FADE_NONE;
+            FadeState = FadeNone;
         }
 
-        public Color repeateFading(Color old)
-        {
-            Color currentColor = getFaded(old);
+        public float Fade { get; set; }
 
-            fadeState = (currentColor.a <= 0.001f) ? fadeState = FADE_IN : 
-                (currentColor.a >= 0.980f) ? fadeState = FADE_OUT : FADE_NONE;
+        public float FadeSpeed
+        {
+            get { return fadeSpeed; }
+            set { fadeSpeed = value; }
+        }
+
+        public float FadeTime
+        {
+            get { return fadeTime; }
+            set { fadeTime = value; }
+        }
+
+        public int FadeState { get; set; }
+
+        public Color RepeatFading(Color old)
+        {
+            var currentColor = GetFaded(old);
+
+            FadeState = currentColor.a <= 0.001f ? FadeState = FadeIn :
+                currentColor.a >= 0.980f ? FadeState = FadeOut : FadeNone;
 
             return currentColor;
         }
 
-        public Color getFaded(Color old)
+        public Color GetFaded(Color old)
         {
-            Color color = old;
+            var color = old;
 
-            color.a =   (fadeState == FADE_IN) ? Mathf.SmoothDamp(color.a, 1.0f, ref fadeSpeed, fadeTime) : 
-                        (fadeState == FADE_OUT) ? color.a = Mathf.SmoothDamp(color.a, 0.0f, ref fadeSpeed, fadeTime) : color.a;
+            color.a = FadeState == FadeIn ? Mathf.SmoothDamp(color.a, 1.0f, ref fadeSpeed, fadeTime) :
+                FadeState == FadeOut ? color.a = Mathf.SmoothDamp(color.a, 0.0f, ref fadeSpeed, fadeTime) : color.a;
 
             return color;
-        }        
+        }
     }
 }

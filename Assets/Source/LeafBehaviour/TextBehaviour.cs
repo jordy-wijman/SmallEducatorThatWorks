@@ -1,37 +1,40 @@
-﻿using GameLib.System.GUI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Source.GUI;
 using UnityEngine;
 
-public class TextBehaviour : ILeafBehaviour
+namespace Source.LeafBehaviour
 {
-    private TextTyper textTyper;
-    private Vector2 position;
-    private List<string> linesOfText;
-
-    public TextBehaviour(TextTyper textTyper, List<string> linesOfText,
-        Vector2 position)
+    public class TextBehaviour : ILeafBehaviour
     {
-        this.textTyper = textTyper;
-        this.position = position;
-        this.linesOfText = linesOfText;
-    }
+        private readonly List<string> linesOfText;
+        private readonly Vector2 position;
+        private readonly TextTyper textTyper;
 
-    public void cleanUp()
-    {
-        textTyper.TextField.text = "";
-        textTyper.TextField.transform.position = new Vector2(10000000.0f, 10000000.0f);
-    }
+        public TextBehaviour(TextTyper textTyper, List<string> linesOfText,
+            Vector2 position)
+        {
+            this.textTyper = textTyper;
+            this.position = position;
+            this.linesOfText = linesOfText;
+        }
 
-    public void start()
-    {
-        textTyper.TextSetting[0].Text = linesOfText;
-        textTyper.TextField.rectTransform.localPosition = position;
-        textTyper.TextSettingIndex = 0;
-        textTyper.showNextText();
-    }
+        public void CleanUp()
+        {
+            textTyper.TextField.text = "";
+            textTyper.TextField.transform.position = new Vector2(10000000.0f, 10000000.0f);
+        }
 
-    public bool update()
-    {
-        return (textTyper.State != TextTyper.TextTyperState.fadeoutDoneIntroductionText);
+        public void Start()
+        {
+            textTyper.TextSetting[0].Text = linesOfText;
+            textTyper.TextField.rectTransform.localPosition = position;
+            textTyper.TextSettingIndex = 0;
+            textTyper.ShowNextText();
+        }
+
+        public bool Update()
+        {
+            return textTyper.State != TextTyper.TextTyperState.FadeoutDoneIntroductionText;
+        }
     }
 }
