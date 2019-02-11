@@ -550,12 +550,12 @@ ILeafBehaviour textBehaviour = new VideoBehaviour(videoPlayer,
             isQuestionnaireActive = false;
         }
 
-        public void extraResourceOnClick()
+        public void ExtraResourceOnClick()
         {
             if (extraResource != null) extraResource.DoOnClick();
         }
 
-        public void questionOnClick()
+        public void QuestionOnClick()
         {
             Debug.Log("Prompt the question box!!");
         }
