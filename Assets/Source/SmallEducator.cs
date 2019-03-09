@@ -117,6 +117,10 @@ ILeafBehaviour textBehaviour = new VideoBehaviour(videoPlayer,
 
         private void LoadWeek2()
         {
+            //Testing out api request
+            APIHandler APIhandler = new APIHandler();
+            APIhandler.testApi();
+
             var positionOnTimeLineSecondsTextOne = 0.0f;
             var positionOnTimeLineSeconds = 0.0f;
             var timeOnScreen = 10.0f;

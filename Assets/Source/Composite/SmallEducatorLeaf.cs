@@ -10,6 +10,10 @@ namespace Source.Composite
         private readonly SmallEducator program;
         private bool started;
 
+        /**
+         * Abstract class with no clear indicated for its uses. Standard HVA quality, intentional or not.
+         * 
+         */
         public SmallEducatorLeaf(int id, string name, float minute, float second, SmallEducator program,
             ILeafBehaviour behaviour) :
             base(id, name, minute * 60 + second)
