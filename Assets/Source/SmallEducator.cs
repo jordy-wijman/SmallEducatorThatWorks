@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Source.Composite;
 using Source.GUI;
 using Source.LeafBehaviour;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using Component = Source.Composite.Component;
@@ -117,9 +119,8 @@ ILeafBehaviour textBehaviour = new VideoBehaviour(videoPlayer,
 
         private void LoadWeek2()
         {
-            //Testing out api request
-            APIHandler APIhandler = new APIHandler();
-            APIhandler.testApi();
+       
+            StartCoroutine(GetText());
 
             var positionOnTimeLineSecondsTextOne = 0.0f;
             var positionOnTimeLineSeconds = 0.0f;
@@ -562,6 +563,24 @@ ILeafBehaviour textBehaviour = new VideoBehaviour(videoPlayer,
         public void QuestionOnClick()
         {
             Debug.Log("Prompt the question box!!");
+        }
+        IEnumerator GetText()
+        {
+            UnityWebRequest www = UnityWebRequest.Get("http://www.my-server.com");
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
+
+                // Or retrieve results as binary data
+                byte[] results = www.downloadHandler.data;
+            }
         }
     }
 }
