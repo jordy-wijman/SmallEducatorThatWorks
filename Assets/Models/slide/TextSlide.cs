@@ -5,7 +5,8 @@ using System.Text;
 
 namespace Assets.Models.slide
 {
-    class TextSlide
+    class HyperTextSlide
     {
+
     }
 }
