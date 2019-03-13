@@ -7,13 +7,13 @@ namespace Assets.Models
 {
     public class Answer
     {
-        private String answer { get; set; }
-        private bool correct { get; set; }
+        private String AnswerText { get; set; }
+        private bool Correct { get; set; }
 
         public Answer(string answer, bool correct)
         {
-            this.answer = answer;
-            this.correct = correct;
+            this.AnswerText = answer;
+            this.Correct = correct;
         }
     }
 }

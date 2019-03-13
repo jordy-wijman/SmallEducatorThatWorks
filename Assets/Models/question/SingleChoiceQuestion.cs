@@ -9,8 +9,8 @@ namespace Assets.Models.question
     {
         public SingleChoiceQuestion(String question, List<Answer> answers)
         {
-            this.question = question;
-            this.answers = answers;
+            this.QuestionText = question;
+            this.Answers = answers;
         }
     }
 }

@@ -8,26 +8,26 @@ namespace Assets.Models
     class Presentation
     {
         private int currentSlide;
-        private List<Slide> slides { get; set; }
+        private List<Slide> Slides { get; set; }
 
         public Presentation(List<Slide> slides)
         {
-            this.slides = slides;
+            this.Slides = slides;
             currentSlide = 0;
         }
 
-        public Slide nextSlide()
+        public Slide NextSlide()
         {
-            return slides[currentSlide++];
+            return Slides[currentSlide++];
         }
 
-        public Slide returnCurrentSlide()
+        public Slide ReturnCurrentSlide()
         {
-            return slides[currentSlide];
+            return Slides[currentSlide];
         }
-        public Slide previousSlide()
+        public Slide PreviousSlide()
         {
-            return slides[currentSlide--];
+            return Slides[currentSlide--];
         }
     }
 }

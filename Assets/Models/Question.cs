@@ -7,8 +7,8 @@ namespace Assets.Models
 {
     public abstract class Question
     {
-        protected String question { get; set; }
-        protected List<Answer> answers;
+        protected String QuestionText { get; set; }
+        protected List<Answer> Answers;
 
 
     }
